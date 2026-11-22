@@ -1,28 +1,32 @@
-/**
- * Placeholder home page — replace this with the app's real home.
- *
- * This is intentionally unstyled scaffolding, not a design to build on.
- * Design the app's own look (layout, theme tokens, typography) from your
- * product's point of view instead of extending this page.
- */
-
-import { useAuthProfileReady } from 'deepspace'
-import { APP_NAME } from '../../constants'
-
 export default function HomePage() {
-  const { isSignedIn, user } = useAuthProfileReady({ requireUser: true })
-
   return (
-    <div className="flex min-h-full flex-col items-center justify-center gap-3 bg-background px-6 text-center text-foreground">
-      <h1 className="text-2xl font-semibold">{APP_NAME}</h1>
-      <p className="max-w-md text-sm text-muted-foreground">
-        This is a placeholder page. Replace <code>src/pages/(app)/home.tsx</code>{' '}
-        with the app&apos;s real home, and give the app its own theme in{' '}
-        <code>src/themes.css</code>.
-      </p>
-      {isSignedIn && user && (
-        <p className="text-sm text-muted-foreground">Signed in as {user.name ?? user.email}</p>
-      )}
-    </div>
+    <section
+      className="min-h-full px-6 py-16"
+      style={{ background: '#faf9f6', color: '#26382f' }}
+    >
+      <div className="mx-auto max-w-2xl">
+        <h1 className="text-4xl font-semibold">
+          Your next decision starts here.
+        </h1>
+
+        <p className="mt-6 text-lg leading-relaxed">
+          Compare your options, weigh what matters, and test which
+          priorities change the result. Record your reasoning so you
+          can learn from the outcome.
+        </p>
+
+        <a
+          href="/decisions"
+          className="mt-8 inline-block rounded-lg px-6 py-3 font-semibold"
+          style={{ background: '#315942', color: '#fff' }}
+        >
+          Open your notebook →
+        </a>
+
+        <p className="mt-4 text-sm">
+          Sign in to save and revisit your decisions.
+        </p>
+      </div>
+    </section>
   )
 }

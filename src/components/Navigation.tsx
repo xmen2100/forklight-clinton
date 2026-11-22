@@ -12,7 +12,6 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AuthOverlay, useAuthProfileReady, signOut } from 'deepspace'
 import { ChevronDown, LogOut, Menu, X } from 'lucide-react'
-import { APP_NAME } from '../constants'
 import type { Role } from '../constants'
 import { nav } from '../nav'
 import { cn } from '../lib/utils'
@@ -42,13 +41,19 @@ export default function Navigation() {
     setMobileMenuOpen(false)
   }, [location.pathname])
 
-  const visibleNav = nav.filter((item) => {
+  const visibleNav = nav
+  .filter((item) => {
     if (item.devOnly && !import.meta.env.DEV) return false
     if (!item.roles) return true
     if (!profileReady) return false
     if (userRole === 'admin') return true
     return item.roles.includes(userRole as Role)
   })
+  .map((item) =>
+    item.path === '/home'
+      ? { ...item, path: '/decisions', label: 'Notebook' }
+      : item,
+  )
 
   const navLink = (item: (typeof nav)[number]) => {
     const active = location.pathname.startsWith(item.path)
@@ -71,8 +76,8 @@ export default function Navigation() {
     <>
       <nav data-testid="app-navigation" className="border-b border-border bg-background">
         <div className="mx-auto flex h-12 max-w-7xl items-center gap-4 px-4">
-          <Link to="/home" className="text-sm font-semibold text-foreground">
-            {APP_NAME}
+          <Link to="/decisions" className="text-sm font-semibold text-foreground">
+            Forklight
           </Link>
 
           <div className="hidden items-center md:flex">{visibleNav.map(navLink)}</div>
